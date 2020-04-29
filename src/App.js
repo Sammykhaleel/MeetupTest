@@ -5,11 +5,12 @@ import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 
 class App extends Component {
+  updateEvents = () => {};
   render() {
     return (
       <div className="App">
         <EventList />
-        <CitySearch />
+        <CitySearch updateEvents={this.updateEvents} />
         <NumberOfEvents />
       </div>
     );

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getSuggestions } from "./api";
+import { mockEvents } from "./mock-events";
 
 class CitySearch extends Component {
   state = {
@@ -12,9 +13,9 @@ class CitySearch extends Component {
     getSuggestions(value).then((suggestions) => this.setState({ suggestions }));
   };
 
-  handleItemClicked = (value) => {
+  handleItemClicked = (value, lat, lot) => {
     this.setState({ query: value });
-    this.props.updateEvents();
+    this.props.updateEvents(lat, lot);
   };
 
   render() {
@@ -30,7 +31,9 @@ class CitySearch extends Component {
           {this.state.suggestions.map((item) => (
             <li
               key={item.name_string}
-              onClick={() => this.handleItemClicked(item.name_string)}
+              onClick={() =>
+                this.handleItemClicked(item.name_string, item.lat, item.lon)
+              }
             >
               {item.name_string}
             </li>

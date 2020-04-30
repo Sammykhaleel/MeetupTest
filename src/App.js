@@ -3,9 +3,21 @@ import "./App.css";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
+import { mockEvents } from "./mock-events";
+import { getEvents } from "./api";
 
 class App extends Component {
-  updateEvents = () => {};
+  // state = { events: [], lat: null, lon: null };
+  state = {
+    events: [],
+    page: null,
+    defaultCity: "",
+    lat: null,
+    lon: null,
+  };
+  updateEvents = (lat, lon) => {
+    getEvents(lat, lon).then((events) => this.setState({ events }));
+  };
   render() {
     return (
       <div className="App">

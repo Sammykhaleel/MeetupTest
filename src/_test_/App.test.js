@@ -4,6 +4,7 @@ import App from "../App";
 import CitySearch from "../CitySearch";
 import EventList from "../EventList";
 import NumberOfEvents from "../NumberOfEvents";
+import { mockEvents } from "../mock-events";
 
 describe("<App /> component", () => {
   let AppWrapper;
@@ -30,7 +31,16 @@ describe("<App /> integration", () => {
     AppWrapper.instance().updateEvents = jest.fn();
     AppWrapper.instance().forceUpdate();
     const CitySearchWrapper = AppWrapper.find(CitySearch);
-    CitySearchWrapper.instance().handleItemClicked("value");
+    CitySearchWrapper.instance().handleItemClicked("value", 1.1, 1.2);
     expect(AppWrapper.instance().updateEvents).toHaveBeenCalledTimes(1);
+    expect(AppWrapper.instance().updateEvents).toHaveBeenCalledWith(1.1, 1.2);
+    AppWrapper.unmount();
+  });
+
+  test("change state after get list of events", async () => {
+    const AppWrapper = shallow(<App />);
+    AppWrapper.instance().updateEvents(1.1, 1.2);
+    await AppWrapper.update();
+    expect(AppWrapper.state("events")).toEqual(mockEvents.events);
   });
 });

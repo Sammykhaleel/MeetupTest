@@ -12,6 +12,7 @@ const mockEvents = {
   events: [
     {
       created: 1563825339000,
+      date_in_series_pattern: false,
       duration: 9000000,
       id: "263370107",
       name: "Microservices mit dem MicroProfile 3.x",

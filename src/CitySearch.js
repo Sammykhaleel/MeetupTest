@@ -14,7 +14,7 @@ class CitySearch extends Component {
   };
 
   handleItemClicked = (value, lat, lot) => {
-    this.setState({ query: value });
+    this.setState({ query: value, suggestions: [] });
     this.props.updateEvents(lat, lot);
   };
 

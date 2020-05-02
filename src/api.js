@@ -110,7 +110,7 @@ function getAccessToken() {
 
     if (!code) {
       window.location.href =
-        "https://secure.meetup.com/oauth2/authorize?client_id=6lrpip852j7ksr4u06d69bbbdj&response_type=code&redirect_uri=https://sammykhaleel.github.io/meetup/";
+        "https://secure.meetup.com/oauth2/authorize?client_id=lrlpvmncurd803tghsn4kleoqv&response_type=code&redirect_uri=https://isendil.github.io/meetup/";
       return null;
     }
 

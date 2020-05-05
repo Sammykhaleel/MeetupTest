@@ -1,6 +1,7 @@
-import { loadFeature, defineFeature } from "jest-cucumber";
+
 import React from "react";
-import { mount } from "enzyme";
+import { loadFeature, defineFeature } from "jest-cucumber";
+import { mount, shallow } from "enzyme";
 import App from "../App";
 import { mockEvents } from "../mock-events";
 import CitySearch from "../CitySearch";
@@ -36,13 +37,23 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given("the main page is open", () => {});
 
-    when("user starts typing in the city textbox", () => {});
+    let CitySearchWrapper;
+    given("the main page is open", () => {
+      CitySearchWrapper = shallow(<CitySearch />);
+    });
+
+    when("user starts typing in the city textbox", () => {
+      CitySearchWrapper.find(".city").simulate("change", {
+        target: { value: "Munich" },
+      });
+    });
 
     then(
       "the user should receive a list of cities (suggestions) that match what they’ve typed",
-      () => {}
+      () => {
+        expect(CitySearchWrapper.find(".suggestions li")).toHaveLength(2);
+      }
     );
   });
 
@@ -52,23 +63,44 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given("user was typing “Munich” in the city textbox", () => {});
 
-    and("the list of suggested cities is showing", () => {});
+    let AppWrapper;
+    given("user was typing “Munich” in the city textbox", () => {
+      AppWrapper = mount(<App />);
+      AppWrapper.find(".city").simulate("change", {
+        target: { value: "Munich" },
+      });
+    });
+
+    and("the list of suggested cities is showing", () => {
+      AppWrapper.update();
+      expect(AppWrapper.find(".suggestions li")).toHaveLength(2);
+    });
 
     when(
       "the user selects a city (e.g., “Munich, Germany”) from the list",
-      () => {}
+      () => {
+        AppWrapper.find(".suggestions li").at(0).simulate("click");
+      }
     );
 
     then(
       "their city should be changed to that city (i.e., “Munich, Germany”)",
-      () => {}
+
+      () => {
+        const CitySearchWrapper = AppWrapper.find(CitySearch);
+        expect(CitySearchWrapper.state("query")).toBe("Munich, Germany");
+      }
     );
 
     and(
       "the user should receive a list of upcoming events in that city",
-      () => {}
+
+      () => {
+        expect(AppWrapper.find(".event")).toHaveLength(
+          mockEvents.events.length
+        );
+      }
     );
   });
 });

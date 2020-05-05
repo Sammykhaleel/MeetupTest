@@ -110,7 +110,7 @@ function getAccessToken() {
 
     if (!code) {
       window.location.href =
-        "https://secure.meetup.com/oauth2/authorize?client_id=lrlpvmncurd803tghsn4kleoqv&response_type=code&redirect_uri=https://mfraggy25.github.io/MeetNGreet/";
+        "https://secure.meetup.com/oauth2/authorize?client_id=lrlpvmncurd803tghsn4kleoqv&response_type=code&redirect_uri=https://isendil.github.io/meetup/";
       return null;
     }
 

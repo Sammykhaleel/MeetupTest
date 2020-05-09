@@ -6,7 +6,7 @@ describe("show/hide an event details", () => {
   beforeAll(async () => {
     const browser = await puppeteer.launch({
       headless: false,
-      slowMo: 100, // slow down by 250ms
+      slowMo: 50, // slow down by 250ms
     });
     page = await browser.newPage();
     await page.goto("http://localhost:3000/");
